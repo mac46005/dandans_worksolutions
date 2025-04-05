@@ -108,7 +108,25 @@ End Sub
 
 
 Private Function IsPassedThreeDaysAndNotComplete() As Boolean
+    If HasValidCompleteByDate() Then
+        Dim completeByValue As Date
+        completeByValue = GetCompleteByDate()
 
+        Dim dateDifference As Integer
+        dateDifference = (Int(today) - Int(completeByValue))
+
+        If dateDifference <= -3 Then
+            If Not IsWorkComplete() Then
+                IsPassedThreeDaysAndNotComplete = True
+            Else
+                IsPassedThreeDaysAndNotComplete = False
+            End If
+        Else
+            IsPassedThreeDaysAndNotComplete = False
+        End If
+    Else
+        IsPassedThreeDaysAndNotComplete = False
+    End If
 End Function
 
 Private Sub HighlightPassedThreeDaysAndNotCompleteRow()
