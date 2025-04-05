@@ -12,7 +12,7 @@ Private themes As DailyReportThemes
 Public Sub HighlightReport()
     Initialize
 
-    ' Cycles throw rows A2 to lastRow
+    ' Cycles throw rows A2 To lastRow
     For rowIndex = 2 To lastRow
 
     Next rowIndex
@@ -31,7 +31,7 @@ End Sub
 
 
 
-' Checks to see if current row's STATUS column value has "Work Complete" as its value
+' Checks To see If current row's STATUS column value has "Work Complete" As its value
 Private Function IsWorkComplete() As Boolean
     Dim status As String
     status = LCase(ws.Cells(rowIndex, DailyRegionReport.StatusCol).Value)
@@ -59,10 +59,10 @@ Private Function IsPassedDueDateAndNotComplete() As Boolean
         Dim completeByValue As Date
         completeByValue = GetCompleteByDate()
 
-        If completeByValue < today Then ' if row's complete by value is less than today
+        If completeByValue < today Then ' If row's complete by value is less than today
             If Not IsWorkComplete() Then
                 IsPassedDueDateAndNotComplete = True
-                Exit Function
+             Exit Function
             End If
         End If
         IsPassedDueDateAndNotComplete = False
@@ -85,12 +85,9 @@ End Sub
 
 Private Function IsDueDateTodayAndNotComplete() As Boolean
     If HasValidCompleteByDate() Then
-        Dim completeByValue As Date
-        completeByValue = GetCompleteByDate()
-
-        If (Int(CompleteByValue) = Int(today)) And Not IsWorkComplete() Then
+        If IsCompleteByToday() And Not IsWorkComplete() Then
             IsDueTodayAndNotComplete = True
-            Exit Function
+         Exit Function
         End If
     End If
 
@@ -111,7 +108,7 @@ End Sub
 
 
 Private Function IsPassedThreeDaysAndNotComplete() As Boolean
-    
+
 End Function
 
 Private Sub HighlightPassedThreeDaysAndNotCompleteRow()
@@ -159,7 +156,7 @@ End Function
 
 
 
-' Get the current rowIndex's 'Complete By' column value as a Date object
+' Get the current rowIndex's 'Complete By' column value As a Date object
 Private Function GetCompleteByDate() As Date
     Dim completeByValue As Date
     completeByValue = wsCells(rowIndex, DailyRegionReport.CompleteByCol).value
@@ -168,10 +165,21 @@ Private Function GetCompleteByDate() As Date
 End Function
 
 
-' Gets the current row using rowIndex from the current for loop cycle in HighlightReport function
+' Gets the current row using rowIndex from the current For Loop cycle in HighlightReport Function
 Private Function GetCurrentRow() As Range
     Dim rowRange As Range
     Set rowRange = ws.Range(ws.Cells(rowIndex, DailyRegionReport.NotesCol), ws.Cells(rowIndex, DailyRegionReport.LastUpdatedDateCol))
     Set GetCurrentRow = rowRange
 End Function
 
+
+Private Function IsCompleteByToday() As Boolean
+    Dim completeByValue As Date
+    completeByValue = GetCompleteByDate()
+
+    If (Int(completeByValue) = Int(today)) Then
+        IsCompleteByToday = True
+    Else
+        IsCompleteByToday = False
+    End If
+End Function
