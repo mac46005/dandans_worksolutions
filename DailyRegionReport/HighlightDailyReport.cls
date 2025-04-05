@@ -127,7 +127,10 @@ Private Function IsPassedThreeDaysAndNotComplete() As Boolean
 End Function
 
 Private Sub HighlightPassedThreeDaysAndNotCompleteRow()
-
+    With GetCurrentRow()
+        .Interior.Color = themes.passedThreeDaysAndNotCompleteTheme.GetBackground()
+        .Font.Color = themes.passedThreeDaysAndNotCompleteTheme.GetForeground()
+    End With
 End Sub
 
 
