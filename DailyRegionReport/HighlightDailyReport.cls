@@ -118,15 +118,12 @@ Private Function IsPassedThreeDaysAndNotComplete() As Boolean
         If dateDifference <= -3 Then
             If Not IsWorkComplete() Then
                 IsPassedThreeDaysAndNotComplete = True
-            Else
-                IsPassedThreeDaysAndNotComplete = False
+                Exit Function
             End If
-        Else
-            IsPassedThreeDaysAndNotComplete = False
         End If
-    Else
-        IsPassedThreeDaysAndNotComplete = False
     End If
+
+    IsPassedThreeDaysAndNotComplete = False
 End Function
 
 Private Sub HighlightPassedThreeDaysAndNotCompleteRow()
