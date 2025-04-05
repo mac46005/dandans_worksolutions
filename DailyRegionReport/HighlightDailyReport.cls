@@ -55,11 +55,17 @@ End Sub
 
 
 Private Function IsPassedDueDateAndNotComplete() As Boolean
-    If  Then
+    If HasValidCompleteByDate() Then
+        Dim completeByValue As Date
+        completeByValue = GetCompleteByDate()
 
-    Else
+        If completeByValue < today Then ' if row's complete by value is less than today
+            If Not IsWorkComplete() Then
+                IsPassedDueDateAndNotComplete = True
+                Exit Function
+            End If
+        End If
         IsPassedDueDateAndNotComplete = False
-    End If
 End Function
 
 Private Sub HighlightPassedDueDateAndNotCompleteRow()
