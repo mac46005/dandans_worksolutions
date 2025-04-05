@@ -14,7 +14,7 @@ Public Sub HighlightReport()
 
     ' Cycles throw rows A2 to lastRow
     For rowIndex = 2 To lastRow
-        
+
     Next rowIndex
 End Sub
 
@@ -118,5 +118,7 @@ Private Function GetCompleteByDate() As Date
 End Function
 
 Private Function GetCurrentRow() As Range
+    Dim rowRange As Range
+    Set rowRange = ws.Range(ws.Cells(rowIndex, DailyRegionReport.NotesCol), ws.Cells(rowIndex, DailyRegionReport.LastUpdatedDateCol))
+    Set GetCurrentRow = rowRange
 End Function
-
