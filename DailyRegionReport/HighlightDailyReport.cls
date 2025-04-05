@@ -5,7 +5,7 @@ Private lastRow As Long
 
 Private today As Date
 
-Private themes As DailyReportTheme
+Private themes As DailyReportThemes
 
 
 
@@ -20,7 +20,7 @@ End Sub
 
 Private Sub Initialize()
     Set ws = ActiveWorkbook.ActiveSheet
-    Set themes = New DailyReportTheme
+    Set themes = New DailyReportThemes
     themes.Initialize
     today = Date
     lastRow = ws.Cells(ws.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
@@ -69,7 +69,13 @@ Private Function IsPassedDueDateAndNotComplete() As Boolean
 End Function
 
 Private Sub HighlightPassedDueDateAndNotCompleteRow()
+    With GetCurrentRow()
+        .Interior.Color = passedDueDateAndNotCompleteTheme.GetBackground()
+        .Font.Color = passedDueDateAndNotCompleteTheme.GetForeground()
+    End With
 End Sub
+
+
 
 
 

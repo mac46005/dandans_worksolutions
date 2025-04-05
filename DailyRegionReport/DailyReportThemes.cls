@@ -5,14 +5,14 @@ Public passedDueDateAndNotCompleteTheme As CellTheme
 Public dueTodayAndNotCompleteTheme As CellTheme
 Public passedThreeDaysAndNotCompleteTheme As CellTheme
 Public withinThreeDaysAndNotCompleteTheme As CellTheme
-Public noSLAAndNoCompleteByTheme As String
+Public noSLAAndNoCompleteByTheme As CellTheme
 
 Public Sub Initialize()
     Set workCompleteTheme = new CellTheme
     Call workCompleteTheme.SetForeground(rgb(0,0,0))
     Call workCompleteTheme.SetBackground(rgb(150,193,233))
 
-    Set passedDueAndNotCompleteTheme = New CellTheme
+    Set passedDueDateAndNotCompleteTheme = New CellTheme
     Call passedDueDateAndNotCompleteTheme.SetForeground(rgb(0,0,0))
     Call passedDueDateAndNotCompleteTheme.Background(rgb(192, 0,0))
 
