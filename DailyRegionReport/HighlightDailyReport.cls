@@ -153,6 +153,10 @@ Private Function IsWithinThreeDaysAndNotComplete() As Boolean
 End Function
 
 Private Sub HighlightWithinThreeDaysAndNotCompleteRow()
+    With GetCurrentRow()
+        .Interior.Color = themes.withinThreeDaysAndNotCompleteTheme.GetBackground()
+        .Font.Color = themes.withinThreeDaysAndNotCompleteTheme.GetForeground()
+    End With
 End Sub
 
 
