@@ -162,10 +162,19 @@ End Sub
 
 
 Private Function IsNoSLAAndNoCompleteBy() As Boolean
+    If Not HasValidCompleteByDate() And LCase(GetPriority()) = LCase("No SLA") And Not IsWorkComplete() Then
+        IsNoSLAAndNoCompleteBy = True
+        Exit Function
+    End If
 
+    IsNoSLAAndNoCompleteBy = False
 End Function
 
 Private Sub HighlightNoSLAAndNoCompleteByRow()
+    With GetCurrentRow()
+        .Interior.Color = themes.noSLAAndNoCompleteByTheme.GetBackground()
+        .Font.Color = themes.noSLAAndNoCompleteByTheme.GetForeground()
+    End With
 End Sub
 
 
@@ -173,7 +182,11 @@ End Sub
 
 
 
-Private Function GetPriorityColValue() As String
+Private Function GetPriority() As String
+    Dim value As String
+    value = ws.Cells(rowIndex, DailyRegionReport.PriorityCol).value
+
+    GetPriority = value
 End Function
 
 Private Function HasValidCompleteByDate() As Boolean
