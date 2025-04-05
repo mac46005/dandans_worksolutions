@@ -3,12 +3,7 @@ Private lastRow As Long
 Private rowIndex As Long
 Private today As Date
 
-Private workCompleteTheme As CellTheme
-Private passedDueDateAndNotCompleteTheme As CellTheme
-Private dueTodayAndNotCompleteTheme As CellTheme
-Private passedThreeDaysAndNotCompleteTheme As CellTheme
-Private withinThreeDaysAndNoteCompleteTheme As CellTheme
-Private noSLAAndNoCompleteByTheme As CellTheme
+Private themes As DailyReportTheme
 
 
 
@@ -16,9 +11,13 @@ Public Sub HighlightReport()
 End Sub
 
 Private Sub Initialize()
+    Set themes = New DailyReportTheme
+    themes.Initialize
 End Sub
 
 Private Sub SetThemes()
+    Set workCompleteTheme = New CellTheme
+    Call work
 End Sub
 
 
