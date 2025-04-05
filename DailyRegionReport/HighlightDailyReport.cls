@@ -99,7 +99,10 @@ Private Function IsDueDateTodayAndNotComplete() As Boolean
 End Function
 
 Private Sub HighlightDueTodayAndNotCompleteRow()
-
+    With GetCurrentRow()
+        .Interior.Color = themes.passedDueDateAndNotCompleteTheme.GetBackground()
+        .Font.Color = themes.passedDueDateAndNotCompleteTheme.GetForeground()
+    End With
 End Sub
 
 
