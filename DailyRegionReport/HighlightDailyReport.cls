@@ -55,6 +55,11 @@ End Sub
 
 
 Private Function IsPassedDueDateAndNotComplete() As Boolean
+    If  Then
+
+    Else
+        IsPassedDueDateAndNotComplete = False
+    End If
 End Function
 
 Private Sub HighlightPassedDueDateAndNotCompleteRow()
@@ -116,6 +121,14 @@ Private Function GetPriorityColValue() As String
 End Function
 
 Private Function HasValidCompleteByDate() As Boolean
+    Dim completeByCell As Range
+    Set completeByCell = ws.Cells(rowIndex, DailyRegionReport.CompleteByCol)
+
+    If IsDate(completeByCell.value) Then
+        HasValidCompleteByDate = True
+    Else
+        HasValidCompleteByDate = False
+    End If
 End Function
 
 Private Function GetCompleteByDate() As Date
