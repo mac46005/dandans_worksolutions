@@ -1,6 +1,8 @@
 Private ws As Worksheet
-Private lastRow As Long
+
 Private rowIndex As Long
+Private lastRow As Long
+
 Private today As Date
 
 Private themes As DailyReportTheme
@@ -8,16 +10,20 @@ Private themes As DailyReportTheme
 
 
 Public Sub HighlightReport()
+    Initialize
+
+    ' Cycles throw rows A2 to lastRow
+    For rowIndex = 2 To lastRow
+        
+    Next rowIndex
 End Sub
 
 Private Sub Initialize()
+    Set ws = ActiveWorkbook.ActiveSheet
     Set themes = New DailyReportTheme
     themes.Initialize
-End Sub
-
-Private Sub SetThemes()
-    Set workCompleteTheme = New CellTheme
-    Call work
+    today = Date
+    lastRow = ws.Cells(ws.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
 End Sub
 
 
@@ -25,9 +31,18 @@ End Sub
 
 
 
+' Checks to see if current row's STATUS column value has "Work Complete" as its value
 Private Function IsWorkComplete() As Boolean
+    Dim status As String
+    status = LCase(ws.Cells(rowIndex, DailyRegionReport.StatusCol).Value)
 
+    If status = LCase("Work Complete") Then
+        IsWorkComplete = True
+    Else
+        IsWorkComplete = False
+    End If
 End Function
+
 Private Sub HighlightWorkCompleteRow()
 End Sub
 
