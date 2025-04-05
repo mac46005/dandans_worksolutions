@@ -44,6 +44,10 @@ Private Function IsWorkComplete() As Boolean
 End Function
 
 Private Sub HighlightWorkCompleteRow()
+    With GetCurrentRow()
+        .Interior.Color = themes.workCompleteTheme.GetBackground()
+        .Font.Color = themes.workCompleteTheme.GetForeground()
+    End With
 End Sub
 
 
@@ -117,6 +121,8 @@ End Function
 Private Function GetCompleteByDate() As Date
 End Function
 
+
+' Gets the current row using rowIndex from the current for loop cycle in HighlightReport function
 Private Function GetCurrentRow() As Range
     Dim rowRange As Range
     Set rowRange = ws.Range(ws.Cells(rowIndex, DailyRegionReport.NotesCol), ws.Cells(rowIndex, DailyRegionReport.LastUpdatedDateCol))
