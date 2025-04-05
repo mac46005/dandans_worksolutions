@@ -88,14 +88,14 @@ Private Function IsDueDateTodayAndNotComplete() As Boolean
         Dim completeByValue As Date
         completeByValue = GetCompleteByDate()
 
-        If (Int(CompleteByValue)) = Int(today)) And Not IsWorkComplete() Then
+        If (Int(CompleteByValue) = Int(today)) And Not IsWorkComplete() Then
             IsDueTodayAndNotComplete = True
-        Else
-            IsDueTodayAndNotComplete = False
+            Exit Function
         End If
-    Else
-        IsDueTodayAndNotComplete = False
     End If
+
+    IsDueDateTodayAndNotComplete = False
+
 End Function
 
 Private Sub HighlightDueTodayAndNotCompleteRow()
@@ -111,7 +111,7 @@ End Sub
 
 
 Private Function IsPassedThreeDaysAndNotComplete() As Boolean
-
+    
 End Function
 
 Private Sub HighlightPassedThreeDaysAndNotCompleteRow()
@@ -174,3 +174,4 @@ Private Function GetCurrentRow() As Range
     Set rowRange = ws.Range(ws.Cells(rowIndex, DailyRegionReport.NotesCol), ws.Cells(rowIndex, DailyRegionReport.LastUpdatedDateCol))
     Set GetCurrentRow = rowRange
 End Function
+
