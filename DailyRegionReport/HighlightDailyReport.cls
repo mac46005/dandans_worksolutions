@@ -84,7 +84,14 @@ End Sub
 
 
 Private Function IsDueDateTodayAndNotComplete() As Boolean
+    If HasValidCompleteByDate() Then
+        Dim completeByValue As Date
+        completeByValue = GetCompleteByDate()
 
+
+    Else
+        IsDueTodayAndNotComplete = False
+    End If
 End Function
 
 Private Sub HighlightDueTodayAndNotCompleteRow()
@@ -144,6 +151,10 @@ Private Function HasValidCompleteByDate() As Boolean
 End Function
 
 Private Function GetCompleteByDate() As Date
+    Dim completeByValue As Date
+    completeByValue = wsCells(rowIndex, DailyRegionReport.CompleteByCol).value
+
+    GetCompleteByDate = completeByValue
 End Function
 
 
