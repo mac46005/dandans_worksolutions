@@ -88,7 +88,11 @@ Private Function IsDueDateTodayAndNotComplete() As Boolean
         Dim completeByValue As Date
         completeByValue = GetCompleteByDate()
 
-
+        If (Int(CompleteByValue)) = Int(today)) And Not IsWorkComplete() Then
+            IsDueTodayAndNotComplete = True
+        Else
+            IsDueTodayAndNotComplete = False
+        End If
     Else
         IsDueTodayAndNotComplete = False
     End If
@@ -150,6 +154,9 @@ Private Function HasValidCompleteByDate() As Boolean
     End If
 End Function
 
+
+
+' Get the current rowIndex's 'Complete By' column value as a Date object
 Private Function GetCompleteByDate() As Date
     Dim completeByValue As Date
     completeByValue = wsCells(rowIndex, DailyRegionReport.CompleteByCol).value
