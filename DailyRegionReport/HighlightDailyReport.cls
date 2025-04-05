@@ -139,6 +139,18 @@ End Sub
 
 
 Private Function IsWithinThreeDaysAndNotComplete() As Boolean
+    If HasValidCompleteByDate() Then
+        Dim completeByValue As Date
+        completeByValue = GetCompleteByDate()
+
+        If Not IsWorkComplete() And (Int(today) - Int(completeByValue)) <= -1 And (Int(today) - Int(completeByValue)) >= -3 Then
+            IsWithinThreeDaysAndNotComplete = True
+        Else
+            IsWithinThreeDaysAndNotComplete = False
+        End If
+    Else
+        IsWithinThreeDaysAndNotComplete = False
+    End If
 End Function
 
 Private Sub HighlightWithinThreeDaysAndNotCompleteRow()
