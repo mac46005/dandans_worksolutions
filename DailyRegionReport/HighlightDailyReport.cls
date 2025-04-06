@@ -14,7 +14,19 @@ Public Sub HighlightReport()
 
     ' Cycles throw rows A2 To lastRow
     For rowIndex = 2 To lastRow
-
+        If IsNoSLAAndNoCompleteBy() Then
+            HighlightNoSLAAndNoCompleteByRow
+        ElseIf IsWithinThreeDaysAndNotComplete() Then
+            HighlightWithinThreeDaysAndNotCompleteRow
+        ElseIf IsPassedThreeDaysAndNotComplete() Then
+            HighlightPassedThreeDaysAndNotCompleteRow
+        ElseIf IsDueTodayAndNotComplete() Then
+            HighlightDueTodayAndNotCompleteRow
+        ElseIf IsPassedDueDateAndNotComplete() Then
+            HighlightPassedDueDateAndNotCompleteRow
+        ElseIf IsWorkComplete() Then
+            HighlightWorkCompleteRow
+        End If
     Next rowIndex
 End Sub
 
@@ -65,13 +77,15 @@ Private Function IsPassedDueDateAndNotComplete() As Boolean
              Exit Function
             End If
         End If
-        IsPassedDueDateAndNotComplete = False
+    End If
+
+    IsPassedDueDateAndNotComplete = False
 End Function
 
 Private Sub HighlightPassedDueDateAndNotCompleteRow()
     With GetCurrentRow()
-        .Interior.Color = passedDueDateAndNotCompleteTheme.GetBackground()
-        .Font.Color = passedDueDateAndNotCompleteTheme.GetForeground()
+        .Interior.Color = themes.passedDueDateAndNotCompleteTheme.GetBackground()
+        .Font.Color = themes.passedDueDateAndNotCompleteTheme.GetForeground()
     End With
 End Sub
 
@@ -83,7 +97,7 @@ End Sub
 
 
 
-Private Function IsDueDateTodayAndNotComplete() As Boolean
+Private Function IsDueTodayAndNotComplete() As Boolean
     If HasValidCompleteByDate() Then
         If IsCompleteByToday() And Not IsWorkComplete() Then
             IsDueTodayAndNotComplete = True
@@ -91,7 +105,7 @@ Private Function IsDueDateTodayAndNotComplete() As Boolean
         End If
     End If
 
-    IsDueDateTodayAndNotComplete = False
+    IsDueTodayAndNotComplete = False
 
 End Function
 
@@ -143,7 +157,7 @@ Private Function IsWithinThreeDaysAndNotComplete() As Boolean
         Dim completeByValue As Date
         completeByValue = GetCompleteByDate()
 
-        If Not IsWorkComplete() And DifferenceFromToday(completeByValue) <= -1 And DifferenceFromToday(completeByValue) >= -3 Then
+        If Not IsWorkComplete() And TodaysDifference(completeByValue) <= -1 And TodaysDifference(completeByValue) >= -3 Then
             IsWithinThreeDaysAndNotComplete = True
             Exit Function
         End If
@@ -205,7 +219,7 @@ End Function
 ' Get the current rowIndex's 'Complete By' column value As a Date object
 Private Function GetCompleteByDate() As Date
     Dim completeByValue As Date
-    completeByValue = wsCells(rowIndex, DailyRegionReport.CompleteByCol).value
+    completeByValue = ws.Cells(rowIndex, DailyRegionReport.CompleteByCol).value
 
     GetCompleteByDate = completeByValue
 End Function
@@ -230,9 +244,9 @@ Private Function IsCompleteByToday() As Boolean
     End If
 End Function
 
-Private Function DifferenceFromToday(d As Date) As Int
-    Dim result As Int
+Private Function TodaysDifference(d As Date) As Integer
+    Dim result As Integer
     result = (Int(today) - Int(d))
 
-    DifferenceFromToday = result
+    TodaysDifference = result
 End Function

@@ -1,24 +1,22 @@
 # DanDan's Work Solutions
 
 > This project consists of several smaller projects intended to help my wife out with eliminating repetitive tasks. Tasks will vary but will mainly consist of Excel and VBA for scripting automation. Thank you for coming by :)
-[excel icon]()
-## 🚀 Demo
 
-<!-- [Click here to view the live demo](https://your-live-site-link.com) -->
-No demo available
+
+
+
+## 📦Features
+ ✅ Check out my awsome features!
+- ### 📄 Highlight Daily Region Report
+  - Automate highlighting of rows depending on row values. Wife was tired of manually scanning the document and manually highlighting each row depending on its content. A macro has been created to automate the process eliminating an hours worth of work.
+
+
 
 ## 📸 Screenshots
 
 | Feature | Screenshot |
 |---------|------------|
-<!-- | Main Page | ![Screenshot](./screenshots/main.png) |
-| Feature X | ![Screenshot](./screenshots/feature-x.png) | -->
-
-## 📦Features
-
-- ✅ Automation
-- ✅ Analyze data
-- ✅ Data Entry
+| Highlight Daily Region Report | ![demo highlight](./readme-assets/highlight-report.gif) |
 
 ## 🛠️ Build With
 
@@ -63,20 +61,23 @@ project-name/
 
 📂 Folder Descriptions
 --->
-📅 Roadmap
+## 📅 Roadmap
+
+### 03/11/2025—Highlight Daily Report
+
 
 <!-- - Add feature A
 - Add unit tests
 - Polish UI for mobile -->
 
-🤝 Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request.
 
-🧾 License
+## 🧾 License
 
 This project is licensed under the MIT License.
 
-📬 Contact
+## 📬 Contact
 
 Created by **Marco Preciado** – feel free to reach out!
