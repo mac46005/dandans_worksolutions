@@ -11,11 +11,11 @@ Private yesterdaysWS As Worksheet
 Private todaysWS As Worksheet
 
 Public Sub Initialize(folderPath As String)
-
+    today = Date
+    folderPath = folderPath
 End Sub
 
 Public Sub TransferNotes()
-
 End Sub
 
 Private Sub GetXLSXFiles()
@@ -31,5 +31,5 @@ Private Sub GetWorkSheets()
 End Sub
 
 Private Sub CloseWorkbooks()
-    
+
 End Sub
