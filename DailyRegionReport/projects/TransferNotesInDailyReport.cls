@@ -51,12 +51,37 @@ Private Sub GetXLSXFiles()
         dateSection = dateSection & "_" & Year(today)
 
         ' Replace _ with - in DD_MM_Year(today)
+        dateSection = dateSection & "_" & Year(today)
+
+        ' Replace _ with - in DD_MM_Year(today)
+        dateSection = Replace(dateSection, "_", "-")
+
+        ' Create date Object
+        Dim fileDate As Date
+
+        ' Initialize date Object with dateSection value
+        fileDate = dateSection
+
+        ' Check if file date is equal to today and if file date is yesterday
+        If Int(fileDate) - Int(today) = 0 Then ' Get yesterdays XLSX file
+            Set todaysWB = GetXLSXFile(fileName)
+        ElseIf Int(fileDate) - Int(today) = -1 Then ' Get today's XLSX file
+            Set yesterdaysWB = GetXLSXFile(fileName)
+        End If
+
+        ' throw error if today or yesterdays files are nothing
+        ' If todaysWB Is Not Nothing Or yesterdaysWB Is Not Nothing Then
+        If todaysWB Is Not Nothing Or yesterdaysWB Is Not Nothing Then
+            Exit For
+        End IF
         
     Next fileName
+
+    MsgBox "Files have been successfully!",,"File Transfer Successful" 
 End Sub
 
 Private Sub GetXLSXFile(fileName As String) As Workbook
-
+    
 End Sub
 
 Private Sub GetWorkSheets()
