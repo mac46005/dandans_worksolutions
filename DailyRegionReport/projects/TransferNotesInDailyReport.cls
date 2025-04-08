@@ -92,5 +92,6 @@ Private Sub GetWorkSheets()
 End Sub
 
 Private Sub CloseWorkbooks()
-
+    yesterdaysWB.Close
+    todaysWB.Close
 End Sub
