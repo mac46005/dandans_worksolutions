@@ -81,11 +81,14 @@ Private Sub GetXLSXFiles()
 End Sub
 
 Private Sub GetXLSXFile(fileName As String) As Workbook
-    
+    Dim wb As Workbook
+    Set wb = Workbooks.Open(folderPath & fileName & ".xlsx")
+    Set GetXLSXFile = wb
 End Sub
 
 Private Sub GetWorkSheets()
-
+    Set yesterdaysWS = yesterdaysWB.Worksheets("Sheet1")
+    Set todaysWS = todaysWB.Worksheets("Sheet1")
 End Sub
 
 Private Sub CloseWorkbooks()
