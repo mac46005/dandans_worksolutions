@@ -4,3 +4,11 @@ Public Sub RunHighlightDailyReport()
 
     hdr.HighlightReport()
 End Sub
+
+Public Sub RunTransferNotes()
+    Dim tn As TransferNotes
+    Set tn = New TransferNotes
+    
+    tn.Initialize("X:\PROGRAMMING\EXCEL\dandans_worksolutions")
+    tn.Execute
+End Sub
