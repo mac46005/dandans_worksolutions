@@ -10,6 +10,8 @@ End Sub
 
 Public Sub Execute()
     GetWorkbooks
+    SetWorksheets
+    ' TODO Transfer Notes from Worksheet Objects
 End Sub
 
 Public Sub GetWorkbooks()
@@ -31,9 +33,9 @@ Public Sub GetWorkbooks()
     For Each file In folder.Files
         Debug.Print file.Name
         If i = (count - 2) Then
-            ' TODO get previous xlsx file and set workbook
+            previousWB = GetWorkbook(file)
         Else If i = (count - 1) Then
-            ' TODO get new xlsx file and set workbook
+            newWB = GetWorkbook(file)
         End If
     Next file
 End Sub
@@ -46,3 +48,14 @@ Private Function GetFolder() As Object
     Set folder = fso.GetFolder(folderPath)
     Set GetFolder = folder
 End Function
+
+Private Function GetWorkbook(file As Object) As Workbook
+    Dim wb As Workbook
+    Set wb = Workbooks.Open(file.Name)
+    Set GetWorkbook = wb
+End Function
+
+Private Sub SetWorksheets()
+    previousWS = previousWB.Sheets(1)
+    nextWS = nextWB.Sheets(1)
+End Sub
