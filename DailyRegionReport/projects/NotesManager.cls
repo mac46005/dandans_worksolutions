@@ -12,6 +12,8 @@ Public Sub Execute()
     GetWorkbooks
     SetWorksheets
     ' TODO Transfer Notes from Worksheet Objects
+    TransferNotes
+
 End Sub
 
 Public Sub GetWorkbooks()
@@ -55,7 +57,24 @@ Private Function GetWorkbook(file As Object) As Workbook
     Set GetWorkbook = wb
 End Function
 
+
+
+
+
+
+
 Private Sub SetWorksheets()
     previousWS = previousWB.Sheets(1)
     nextWS = nextWB.Sheets(1)
+End Sub
+
+
+
+
+
+
+Private Sub TransferNotes ()
+End Sub
+
+Private Sub CloseWorkbooks()
 End Sub
