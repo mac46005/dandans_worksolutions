@@ -73,8 +73,15 @@ End Sub
 
 
 
-Private Sub TransferNotes ()
+Private Sub TransferNotes()
+    Dim newLastRow As Long
+    newLastRow = newWS.Cells(newWS.Rows.Count, DailyRegionReport.IdCol).Row
+    
+    Dim newRange As Range
+    Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
+
 End Sub
 
 Private Sub CloseWorkbooks()
+    previousWB.Close
 End Sub
