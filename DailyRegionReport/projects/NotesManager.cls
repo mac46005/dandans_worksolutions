@@ -80,6 +80,10 @@ Private Sub TransferNotes()
     Dim newRange As Range
     Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
 
+    For Each cell In newRange
+        
+    Next cell
+    
 End Sub
 
 Private Sub CloseWorkbooks()
