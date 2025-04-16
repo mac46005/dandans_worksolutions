@@ -34,6 +34,7 @@ Public Sub GetWorkbooks()
     i = 0
     For Each file In folder.Files
         Debug.Print file.Name
+        ' TODO May need to add logic to see whether file has been modified recently or a while.
         If i = (count - 2) Then
             previousWB = GetWorkbook(file)
         Else If i = (count - 1) Then
@@ -80,9 +81,20 @@ Private Sub TransferNotes()
     Dim newRange As Range
     Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
 
-    For Each cell In newRange
-        
-    Next cell
+
+    Dim previousLastRow As Long
+    previousLastRow = previousWS.Cells(previousWS.Rows.Count, DailyRegionReport.IdCol).Row
+
+    Dim previousRange As Range
+    Set previousRange = previousWS.Range(previousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(preciousLastRow, DailyRegionReport.IdCol))
+
+    For Each nCell In newRange
+        For Each pCell In previousRange
+            If nCell.Value = pCell.Value
+                
+            End If
+        Next pCell 
+    Next nCell
     
 End Sub
 
