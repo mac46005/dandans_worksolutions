@@ -72,7 +72,24 @@ End Sub
 
 
 
+Private Function GetPreviousRange() As Range
+    Dim previousRange As Range
+    Dim previousLastRow As Long
 
+    previousLastRow = previousWS.Cells(preciousWS.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
+    Set previousRange = preciousWS.Range(preciousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(previousLastRow, DailyRegionReport.IdCol))
+    Set GetPreviousRange = previousRange
+End Function
+
+
+Private Function GetNewRange() As Range
+    Dim newRange As Range
+    Dim newLastRow As Long
+
+    newLastRow = newWS.Cells(newWS.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
+    Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
+    Set GetNewRange = newRange
+End Function
 
 Private Sub TransferNotes()
     Dim newLastRow As Long
@@ -83,15 +100,21 @@ Private Sub TransferNotes()
 
 
     Dim previousLastRow As Long
-    previousLastRow = previousWS.Cells(previousWS.Rows.Count, DailyRegionReport.IdCol).Row
+    previousLastRow = previousWS.Cells(previousWS.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
 
     Dim previousRange As Range
     Set previousRange = previousWS.Range(previousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(preciousLastRow, DailyRegionReport.IdCol))
 
     For Each nCell In newRange
+
         For Each pCell In previousRange
-            If nCell.Value = pCell.Value
-                
+            If nCell.Value = pCell.Value Then
+                ' Transfer note
+
+                Dim nNoteCell = newWS.Cells(nCell.Row, DailyRegionReport.NotesCol)
+                nNoteCell.Value = previousWS.Cells(pCell.Row, DailyRegionReport.NotesCol).Value
+
+                Exit For
             End If
         Next pCell 
     Next nCell
