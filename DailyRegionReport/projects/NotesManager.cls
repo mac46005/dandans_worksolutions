@@ -16,6 +16,8 @@ Public Sub Execute()
 End Sub
 
 Private Sub GetWorkbooks()
+    Debug.Print "GetWorkbooks()"
+
     Dim folder As Object
     Dim file As Object
     Dim count As Integer
@@ -29,18 +31,27 @@ Private Sub GetWorkbooks()
     ' Loop through Collection of Files
     ' Get the last two files :(
     ' Apparently, microsoft recommends to loop through the Files Object because the Object is of type Collection. The type of Collection given is completely different than the one that is given in Excel VBA.
+
+    Dim prevFile As Object
+    Dim newFile As Object
+
     Dim i As Integer
     i = 0
     For Each file In folder.Files
         Debug.Print file.Name
         ' TODO May need to add logic to see whether file has been modified recently or a while.
         If i = (count - 2) Then
-            Set previousWB = GetWorkbook(file)
+            Set prevFile = file
         ElseIf i = (count - 1) Then
-            Set newWB = GetWorkbook(file)
+            Set newFile = file
         End If
         i = i + 1
     Next file
+
+
+    Debug.Print "Workbooks got are:\n" & "prev: " & prevFile.Name & "\n" & "next: " & newFile.Name
+    Set previousWB = GetWorkbook(prevFile)
+    Set newWB = GetWorkbook(newFile)
 End Sub
 
 Private Function GetFolder() As Object
@@ -71,7 +82,7 @@ End Function
 
 Private Sub SetWorksheets()
     Set previousWS = previousWB.Sheets(1)
-    Set nextWS = nextWB.Sheets(1)
+    Set nextWS = newWB.Sheets(1)
 End Sub
 
 
@@ -130,3 +141,4 @@ End Sub
 Private Sub CloseWorkbooks()
     previousWB.Close
 End Sub
+
