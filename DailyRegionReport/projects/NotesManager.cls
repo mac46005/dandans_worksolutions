@@ -64,12 +64,8 @@ Private Function GetFolder() As Object
 End Function
 
 Private Function GetWorkbook(file As Object) As Workbook
-
-    ' HAVING ISSUE HERE
-    ' file being grab starts with ~somefile.xlsx
-    ' but i dont want that. I want the next and previous files.
-
     Dim wb As Workbook
+
     Set wb = Workbooks.Open(folderPath & "/" & file.Name)
     Set GetWorkbook = wb
 End Function
@@ -86,41 +82,25 @@ Private Sub SetWorksheets()
 End Sub
 
 
+Private Function GetIdColRange(ws As Worksheet) As Range
+    Dim lastRow As Long
+    Dim idRange As Range
 
-
-Private Function GetPreviousRange() As Range
-    Dim previousRange As Range
-    Dim previousLastRow As Long
-
-    previousLastRow = previousWS.Cells(preciousWS.Rows.count, DailyRegionReport.IdCol).End(xlUp).Row
-    Set previousRange = preciousWS.Range(preciousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(previousLastRow, DailyRegionReport.IdCol))
-    Set GetPreviousRange = previousRange
+    lastRow = ws.Cells(ws.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
+    Set idRange = ws.Range(ws.Cells(2, DailyRegionReport.IdCol), ws.Cells(lastRow, DailyRegionReport.IdCol))
+    Set GetIdColRange = idRange
 End Function
 
 
-Private Function GetNewRange() As Range
-    Dim newRange As Range
-    Dim newLastRow As Long
 
-    newLastRow = newWS.Cells(newWS.Rows.count, DailyRegionReport.IdCol).End(xlUp).Row
-    Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
-    Set GetNewRange = newRange
-End Function
 
 Private Sub TransferNotes()
-    Dim newLastRow As Long
-    newLastRow = newWS.Cells(newWS.Rows.count, DailyRegionReport.IdCol).Row
-    
     Dim newRange As Range
-    Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
-
-
-    Dim previousLastRow As Long
-    previousLastRow = previousWS.Cells(previousWS.Rows.count, DailyRegionReport.IdCol).End(xlUp).Row
-
     Dim previousRange As Range
-    Set previousRange = previousWS.Range(previousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(preciousLastRow, DailyRegionReport.IdCol))
-
+    
+    Set newRange = GetIdColRange(newWS)
+    Set previousRange = GetIdColRange(previousWS)
+    
     For Each nCell In newRange
 
         For Each pCell In previousRange
@@ -141,4 +121,5 @@ End Sub
 Private Sub CloseWorkbooks()
     previousWB.Close
 End Sub
+
 
