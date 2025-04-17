@@ -11,18 +11,17 @@ End Sub
 Public Sub Execute()
     GetWorkbooks
     SetWorksheets
-    ' TODO Transfer Notes from Worksheet Objects
     TransferNotes
-
+    CloseWorkbooks
 End Sub
 
-Public Sub GetWorkbooks()
+Private Sub GetWorkbooks()
     Dim folder As Object
     Dim file As Object
     Dim count As Integer
 
     Set folder = GetFolder()
-    count = folder.Files.Count
+    count = folder.Files.count
 
     If folder Is Nothing Then Exit Sub
     If count = 0 Then Exit Sub
@@ -36,10 +35,11 @@ Public Sub GetWorkbooks()
         Debug.Print file.Name
         ' TODO May need to add logic to see whether file has been modified recently or a while.
         If i = (count - 2) Then
-            previousWB = GetWorkbook(file)
-        Else If i = (count - 1) Then
-            newWB = GetWorkbook(file)
+            Set previousWB = GetWorkbook(file)
+        ElseIf i = (count - 1) Then
+            Set newWB = GetWorkbook(file)
         End If
+        i = i + 1
     Next file
 End Sub
 
@@ -53,8 +53,13 @@ Private Function GetFolder() As Object
 End Function
 
 Private Function GetWorkbook(file As Object) As Workbook
+
+    ' HAVING ISSUE HERE
+    ' file being grab starts with ~somefile.xlsx
+    ' but i dont want that. I want the next and previous files.
+
     Dim wb As Workbook
-    Set wb = Workbooks.Open(file.Name)
+    Set wb = Workbooks.Open(folderPath & "/" & file.Name)
     Set GetWorkbook = wb
 End Function
 
@@ -65,8 +70,8 @@ End Function
 
 
 Private Sub SetWorksheets()
-    previousWS = previousWB.Sheets(1)
-    nextWS = nextWB.Sheets(1)
+    Set previousWS = previousWB.Sheets(1)
+    Set nextWS = nextWB.Sheets(1)
 End Sub
 
 
@@ -76,7 +81,7 @@ Private Function GetPreviousRange() As Range
     Dim previousRange As Range
     Dim previousLastRow As Long
 
-    previousLastRow = previousWS.Cells(preciousWS.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
+    previousLastRow = previousWS.Cells(preciousWS.Rows.count, DailyRegionReport.IdCol).End(xlUp).Row
     Set previousRange = preciousWS.Range(preciousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(previousLastRow, DailyRegionReport.IdCol))
     Set GetPreviousRange = previousRange
 End Function
@@ -86,21 +91,21 @@ Private Function GetNewRange() As Range
     Dim newRange As Range
     Dim newLastRow As Long
 
-    newLastRow = newWS.Cells(newWS.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
+    newLastRow = newWS.Cells(newWS.Rows.count, DailyRegionReport.IdCol).End(xlUp).Row
     Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
     Set GetNewRange = newRange
 End Function
 
 Private Sub TransferNotes()
     Dim newLastRow As Long
-    newLastRow = newWS.Cells(newWS.Rows.Count, DailyRegionReport.IdCol).Row
+    newLastRow = newWS.Cells(newWS.Rows.count, DailyRegionReport.IdCol).Row
     
     Dim newRange As Range
     Set newRange = newWS.Range(newWS.Cells(2, DailyRegionReport.IdCol), newWS.Cells(newLastRow, DailyRegionReport.IdCol))
 
 
     Dim previousLastRow As Long
-    previousLastRow = previousWS.Cells(previousWS.Rows.Count, DailyRegionReport.IdCol).End(xlUp).Row
+    previousLastRow = previousWS.Cells(previousWS.Rows.count, DailyRegionReport.IdCol).End(xlUp).Row
 
     Dim previousRange As Range
     Set previousRange = previousWS.Range(previousWS.Cells(2, DailyRegionReport.IdCol), preciousWS.Cells(preciousLastRow, DailyRegionReport.IdCol))
@@ -108,15 +113,16 @@ Private Sub TransferNotes()
     For Each nCell In newRange
 
         For Each pCell In previousRange
-            If nCell.Value = pCell.Value Then
+            If nCell.value = pCell.value Then
                 ' Transfer note
 
-                Dim nNoteCell = newWS.Cells(nCell.Row, DailyRegionReport.NotesCol)
-                nNoteCell.Value = previousWS.Cells(pCell.Row, DailyRegionReport.NotesCol).Value
+                Dim nNoteCell As Range
+                Set nNoteCell = newWS.Cells(nCell.Row, DailyRegionReport.NotesCol)
+                nNoteCell.value = previousWS.Cells(pCell.Row, DailyRegionReport.NotesCol).value
 
                 Exit For
             End If
-        Next pCell 
+        Next pCell
     Next nCell
     
 End Sub
